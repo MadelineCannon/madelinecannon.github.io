@@ -8,3 +8,12 @@ output:
 ---
 
 # Welcome to my website!
+
+This is me:
+
+![](me.jpg)
+
+
+This is my cat:
+
+![](coco.JPG)
