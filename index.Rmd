@@ -1,5 +1,5 @@
 ---
-title: "Madeline Cannon"
+title: "Home"
 output: 
   html_document:
     toc: true
@@ -17,3 +17,6 @@ This is me:
 This is my cat:
 
 ![](coco.JPG)
+
+
+This is my [resume](resume.html).
