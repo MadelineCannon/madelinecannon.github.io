@@ -8,39 +8,37 @@ output:
 
 #### Education
 
-**Columbia University Mailman School of Public Health**, New York, NY
-Master of Public Health (MPH), Biostatistics, expected May 2020
--Certificate: Advanced Epidemiology
--GPA: 3.67/4.00
--Relevant coursework: Epidemiology, Data Science, SAS, Applied Regression, Analysis of Categorical Data, Probability, Foundations of Public Health, Determinants of Health, Public Health Interventions, Health Systems
+**Columbia University Mailman School of Public Health**, New York, NY  
+Master of Public Health (MPH), Biostatistics, expected May 2020  
+-Certificate: Advanced Epidemiology  
+-GPA: 3.67/4.00  
+-Relevant coursework: Epidemiology, Data Science, SAS, Applied Regression, Analysis of Categorical Data, Probability, Foundations of Public Health, Determinants of Health, Public Health Interventions, Health Systems  
 
-**University of Oregon, Robert D. Clark Honors College**, Eugene, OR
-Bachelor of Science, June 2018
--Major: Mathematics and Computer Science
--Minor: Biology
--GPA: 3.39/4.00
--Study abroad: University of Hong Kong
+**University of Oregon, Robert D. Clark Honors College**, Eugene, OR  
+Bachelor of Science, June 2018  
+-Major: Mathematics and Computer Science  
+-Minor: Biology  
+-GPA: 3.39/4.00  
+-Study abroad: University of Hong Kong  
 -Relevant coursework: Statistics, Machine Learning, Scientific and Technical Writing, Python, Java, Data Structures, Tropical Diseases in Africa
 
 
 #### Experience
 
-**Research Intern**
-SESSTIM, Aix Marseille University, Marseille, France, 2019-present
--Analyzed data using R for an evaluation of a Mass Drug Administration intervention to eliminate malaria in Eastern Myanmar led by Oxford University
--Identified factors associated with a successful decrease in malaria prevalence at the village level using generalized linear models
--Classified villages into landscape profiles using Hierarchical Clustering on Principle Components
+**Research Intern**  
+SESSTIM, Aix Marseille University, Marseille, France, 2019-present  
+-Analyzed data using R for an evaluation of a Mass Drug Administration intervention to eliminate malaria in Eastern Myanmar led by Oxford University  
+-Identified factors associated with a successful decrease in malaria prevalence at the village level using generalized linear models  
+-Classified villages into landscape profiles using Hierarchical Clustering on Principle Components  
 
-**Web Development Intern**
-Heart Gallery of America, Eugene, OR, 2016-2017
--Maintained website for a non-profit that helps connect adoptive parents with waiting foster children
--Coordinated with adoptive parents and social workers on the status of waiting children
--Answered questions from families about the adoption process
--Managed database of waiting children
-
-
-#### Skills
-Languages: French (conversational)
-Programming: R, SAS, Python, Java
+**Web Development Intern**  
+Heart Gallery of America, Eugene, OR, 2016-2017  
+-Maintained website for a non-profit that helps connect adoptive parents with waiting foster children  
+-Coordinated with adoptive parents and social workers on the status of waiting children  
+-Answered questions from families about the adoption process  
+-Managed database of waiting children  
 
 
+#### Skills  
+Languages: French (conversational)  
+Programming: R, SAS, Python, Java  

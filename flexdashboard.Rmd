@@ -1,0 +1,77 @@
+---
+title: "NYC Restaurant Inspections"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r}
+
+library(tidyverse)
+library(plotly)
+
+```
+
+```{r}
+
+nyc_inspec = read_csv("./data/nyc_inspec.csv") %>%
+              filter(score >= 0) %>%
+              filter(latitude != 0) %>%
+              filter(longitude != 0) %>%
+              distinct(dba, latitude, longitude, .keep_all=TRUE)
+              
+
+```
+
+
+```{r}
+
+score_map = nyc_inspec %>%
+            mutate(text_label = str_c(dba, "\nCuisine: ",
+                                      cuisine_description, "\nScore: ", score)) %>%
+            select(dba,
+                   cuisine_description,
+                   latitude,
+                   longitude,
+                   score,
+                   text_label) %>%
+            plot_ly(x = ~longitude,
+                    y = ~latitude,
+                    type = "scatter",
+                    mode = "markers",
+                    color = ~score,
+                    text = ~text_label)
+
+score_map
+
+```
+
+```{r}
+
+best_cuisine = nyc_inspec %>%
+                group_by(cuisine_description) %>%
+                summarize(median(score, na.rm=TRUE)) %>%
+                top_n(-10) %>%
+                select(cuisine_description)
+
+worst_cuisine = nyc_inspec %>%
+                group_by(cuisine_description) %>%
+                summarize(median(score, na.rm=TRUE)) %>%
+                top_n(10) %>%
+                select(cuisine_description)
+
+inner_join(nyc_inspec, best_cuisine, by = "cuisine_description") %>% 
+  mutate(cuisine = fct_reorder(cuisine_description, score)) %>%
+  select(cuisine, score) %>%
+  plot_ly(y = ~score, color = ~cuisine, type = "box",
+          colors = "Set2")
+
+inner_join(nyc_inspec, worst_cuisine, by = "cuisine_description") %>% 
+  mutate(cuisine = fct_reorder(cuisine_description, score)) %>%
+  select(cuisine, score) %>%
+  plot_ly(y = ~score, color = ~cuisine, type = "box",
+          colors = "Set2")
+
+
+```
