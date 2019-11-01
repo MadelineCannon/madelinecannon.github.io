@@ -73,5 +73,14 @@ inner_join(nyc_inspec, worst_cuisine, by = "cuisine_description") %>%
   plot_ly(y = ~score, color = ~cuisine, type = "box",
           colors = "Set2")
 
+```
+
+```{r}
+
+nyc_inspec %>% select(boro, score) %>%
+  group_by(boro) %>%
+  summarize(mean_score = mean(score, na.rm=TRUE)) %>%
+  mutate(boro = fct_reorder(boro, mean_score)) %>%
+  plot_ly(x = ~boro, y = ~mean_score, color = ~boro, type = "bar")
 
 ```
