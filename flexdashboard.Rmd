@@ -51,7 +51,7 @@ common_cuisines = cuisines %>% count(cuisine_description, sort=TRUE) %>%
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Map of scores (lower scores are better)
+### Map of scores (0-13 = A, 14-27 = B, 28+ = C)
 
 ```{r}
 

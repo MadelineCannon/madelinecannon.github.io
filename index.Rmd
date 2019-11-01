@@ -19,3 +19,5 @@ This is my cat:
 
 
 This is my [resume](resume.html).
+
+This is my fancy [dashboard](flexdashboard.html)!
