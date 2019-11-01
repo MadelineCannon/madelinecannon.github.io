@@ -21,7 +21,6 @@ nyc_inspec = read_csv("./data/nyc_inspec.csv") %>%
               filter(longitude != 0) %>%
               distinct(dba, latitude, longitude, .keep_all=TRUE)
               
-
 ```
 
 
@@ -47,40 +46,53 @@ score_map
 
 ```
 
+
 ```{r}
 
-best_cuisine = nyc_inspec %>%
-                group_by(cuisine_description) %>%
-                summarize(median(score, na.rm=TRUE)) %>%
-                top_n(-10) %>%
-                select(cuisine_description)
+borough_plot =
+  nyc_inspec %>% 
+  select(boro, score) %>%
+  plot_ly(y = ~score, color = ~boro, type = "box")
 
-worst_cuisine = nyc_inspec %>%
-                group_by(cuisine_description) %>%
-                summarize(median(score, na.rm=TRUE)) %>%
-                top_n(10) %>%
-                select(cuisine_description)
-
-inner_join(nyc_inspec, best_cuisine, by = "cuisine_description") %>% 
-  mutate(cuisine = fct_reorder(cuisine_description, score)) %>%
-  select(cuisine, score) %>%
-  plot_ly(y = ~score, color = ~cuisine, type = "box",
-          colors = "Set2")
-
-inner_join(nyc_inspec, worst_cuisine, by = "cuisine_description") %>% 
-  mutate(cuisine = fct_reorder(cuisine_description, score)) %>%
-  select(cuisine, score) %>%
-  plot_ly(y = ~score, color = ~cuisine, type = "box",
-          colors = "Set2")
+borough_plot
 
 ```
 
+
 ```{r}
 
-nyc_inspec %>% select(boro, score) %>%
-  group_by(boro) %>%
-  summarize(mean_score = mean(score, na.rm=TRUE)) %>%
-  mutate(boro = fct_reorder(boro, mean_score)) %>%
-  plot_ly(x = ~boro, y = ~mean_score, color = ~boro, type = "bar")
+cuisines = nyc_inspec
+
+# Shorten long names
+for (row in 1:nrow(cuisines)) {
+  if (cuisines[row, 'cuisine_description'] == "Ice Cream, Gelato, Yogurt, Ices") {
+    cuisines[row, 'cuisine_description'] = "Ice Cream"
+  }
+  if (cuisines[row, 'cuisine_description'] == "Sandwiches/Salads/Mixed Buffet") {
+    cuisines[row, 'cuisine_description'] = "Sandwiches/Salads"
+  }
+  if (cuisines[row, 'cuisine_description'] == "Café/Coffee/Tea") {
+    cuisines[row, 'cuisine_description'] = "Coffee/Tea"
+  }
+  if (cuisines[row, 'cuisine_description'] == "Juice, Smoothies, Fruit Salads") {
+    cuisines[row, 'cuisine_description'] = "Juice/Smoothies"
+  }
+  if (cuisines[row, 'cuisine_description'] == "Latin (Cuban, Dominican, Puerto Rican, South & Central American)") {
+    cuisines[row, 'cuisine_description'] = "Latin"
+  }
+}
+
+common_cuisines = cuisines %>% count(cuisine_description, sort=TRUE) %>%
+  top_n(28) %>% select(cuisine_description)
+
+
+cuisine_plot = inner_join(cuisines, common_cuisines, by = "cuisine_description") %>%
+                count(cuisine_description) %>%
+                mutate(cuisine = fct_reorder(cuisine_description, -n)) %>%
+                select(cuisine, n) %>%
+                plot_ly(x = ~cuisine, y = ~n, color = ~cuisine, type = "bar")
+
+cuisine_plot
+
 
 ```
