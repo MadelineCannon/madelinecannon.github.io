@@ -1,15 +1,16 @@
 ---
 title: "NYC Restaurant Inspections"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
-```{r}
+```{r setup, include=FALSE}
 
 library(tidyverse)
 library(plotly)
+library(flexdashboard)
 
 ```
 
@@ -20,46 +21,6 @@ nyc_inspec = read_csv("./data/nyc_inspec.csv") %>%
               filter(latitude != 0) %>%
               filter(longitude != 0) %>%
               distinct(dba, latitude, longitude, .keep_all=TRUE)
-              
-```
-
-
-```{r}
-
-score_map = nyc_inspec %>%
-            mutate(text_label = str_c(dba, "\nCuisine: ",
-                                      cuisine_description, "\nScore: ", score)) %>%
-            select(dba,
-                   cuisine_description,
-                   latitude,
-                   longitude,
-                   score,
-                   text_label) %>%
-            plot_ly(x = ~longitude,
-                    y = ~latitude,
-                    type = "scatter",
-                    mode = "markers",
-                    color = ~score,
-                    text = ~text_label)
-
-score_map
-
-```
-
-
-```{r}
-
-borough_plot =
-  nyc_inspec %>% 
-  select(boro, score) %>%
-  plot_ly(y = ~score, color = ~boro, type = "box")
-
-borough_plot
-
-```
-
-
-```{r}
 
 cuisines = nyc_inspec
 
@@ -83,16 +44,56 @@ for (row in 1:nrow(cuisines)) {
 }
 
 common_cuisines = cuisines %>% count(cuisine_description, sort=TRUE) %>%
-  top_n(28) %>% select(cuisine_description)
+  top_n(14) %>% select(cuisine_description)
+              
+```
 
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-cuisine_plot = inner_join(cuisines, common_cuisines, by = "cuisine_description") %>%
+### Map of scores (lower scores are better)
+
+```{r}
+
+nyc_inspec %>%
+  mutate(text_label = str_c(dba, "\nCuisine: ", cuisine_description,
+                            "\nScore: ", score)) %>%
+  select(dba,
+         cuisine_description,
+         latitude,
+         longitude,
+         score,
+         text_label) %>%
+  plot_ly(x = ~longitude,
+          y = ~latitude,
+          type = "scatter",
+          mode = "markers",
+          color = ~score,
+          text = ~text_label)
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Scores by borough
+
+```{r}
+
+nyc_inspec %>% 
+  select(boro, score) %>%
+  plot_ly(y = ~score, color = ~boro, type = "box")
+
+```
+
+### Most common cuisine types
+
+```{r}
+
+inner_join(cuisines, common_cuisines, by = "cuisine_description") %>%
                 count(cuisine_description) %>%
                 mutate(cuisine = fct_reorder(cuisine_description, -n)) %>%
                 select(cuisine, n) %>%
                 plot_ly(x = ~cuisine, y = ~n, color = ~cuisine, type = "bar")
-
-cuisine_plot
-
 
 ```
